@@ -138,9 +138,10 @@ class PGAgent(nn.Module):
             advantages = None
             ############################
             # YOUR IMPLEMENTATION HERE #
-            obs_t = ptu.from_numpy(obs)
-            values = self.critic(obs_t).detach().cpu().numpy().squeeze()
-            advantages = q_values - values            
+            with torch.no_grad():
+                values_t = self.critic(ptu.from_numpy(obs)).squeeze(-1)
+            values = ptu.to_numpy(values_t)
+            advantages = q_values - values      
             ############################
             assert values.shape == q_values.shape
 
