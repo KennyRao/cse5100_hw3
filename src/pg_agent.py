@@ -151,7 +151,9 @@ class PGAgent(nn.Module):
             advantages = None
             ############################
             # YOUR IMPLEMENTATION HERE #
-            advantages = (advantages - np.mean(advantages)) / (np.std(advantages) + 1e-8)
+            adv_mean = advantages.mean()
+            adv_std = advantages.std()
+            advantages = (advantages - adv_mean) / (adv_std + 1e-8)
             ############################
 
         return advantages
