@@ -85,7 +85,9 @@ class PGAgent(nn.Module):
             critic_info: dict = None
             ############################
             # YOUR IMPLEMENTATION HERE #
-
+            critic_info = {}
+            for _ in range(self.baseline_gradient_steps):
+                critic_info = self.critic.update(obs, q_values)
             ############################
 
             info.update(critic_info)
