@@ -103,7 +103,7 @@ class PGAgent(nn.Module):
             q_values = None
             ############################
             # YOUR IMPLEMENTATION HERE #
-
+            q_values = [self._discounted_return(r) for r in rewards]
             ############################
 
         else:
@@ -114,7 +114,7 @@ class PGAgent(nn.Module):
 
             ############################
             # YOUR IMPLEMENTATION HERE #
-
+            q_values = [self._discounted_reward_to_go(r) for r in rewards]
             ############################
 
         return q_values
@@ -138,7 +138,9 @@ class PGAgent(nn.Module):
             advantages = None
             ############################
             # YOUR IMPLEMENTATION HERE #
-            
+            obs_t = ptu.from_numpy(obs)
+            values = self.critic(obs_t).detach().cpu().numpy().squeeze()
+            advantages = q_values - values            
             ############################
             assert values.shape == q_values.shape
 
@@ -148,7 +150,7 @@ class PGAgent(nn.Module):
             advantages = None
             ############################
             # YOUR IMPLEMENTATION HERE #
-
+            advantages = (advantages - np.mean(advantages)) / (np.std(advantages) + 1e-8)
             ############################
 
         return advantages
@@ -166,7 +168,10 @@ class PGAgent(nn.Module):
 
         ############################
         # YOUR IMPLEMENTATION HERE #
-    
+        discounted_sum = 0
+        for t, r in enumerate(rewards):
+            discounted_sum += (self.gamma ** t) * r
+        return np.full_like(rewards, discounted_sum, dtype=np.float32)    
         ############################
         pass
 
@@ -181,6 +186,12 @@ class PGAgent(nn.Module):
 
         ############################
         # YOUR IMPLEMENTATION HERE #
-
+        n = len(rewards)
+        rtg = np.zeros_like(rewards, dtype=np.float32)
+        running_add = 0.0
+        for t in reversed(range(n)):
+            running_add = rewards[t] + self.gamma * running_add
+            rtg[t] = running_add
+        return rtg
         ############################
         pass

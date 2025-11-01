@@ -63,7 +63,12 @@ class MLPPolicy(nn.Module):
 
         ############################
         # YOUR IMPLEMENTATION HERE #
-
+        if obs.ndim == 1:
+            obs = obs[None, :]  # add batch dim
+        obs = ptu.from_numpy(obs)
+        dist = self.forward(obs)
+        action = dist.sample()
+        action = ptu.to_numpy(action[0])
         ############################
 
         return action
@@ -80,7 +85,8 @@ class MLPPolicy(nn.Module):
 
             ############################
             # YOUR IMPLEMENTATION HERE #
-
+            logits = self.logits_net(obs)
+            action = distributions.Categorical(logits=logits)
             ############################
 
         else:
@@ -116,7 +122,16 @@ class MLPPolicyPG(MLPPolicy):
 
         ############################
         # YOUR IMPLEMENTATION HERE #
+        dist = self.forward(obs)
+        if self.discrete:
+            log_probs = dist.log_prob(actions.long())
+        else:
+            log_probs = dist.log_prob(actions)
+        loss = -(log_probs * advantages).mean()
 
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()        
         ############################
 
         return {
