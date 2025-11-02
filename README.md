@@ -53,3 +53,8 @@ python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline -bgs
 ```cmd
 python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline -blr 1e-3 --exp_name cartpole_na_rtg_baseline_blr1e-3
 ```
+Run
+```cmd
+tensorboard --logdir .\data --port 6006
+```
+to start TensorBoard.
