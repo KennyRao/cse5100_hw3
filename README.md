@@ -36,4 +36,8 @@ python run.py --env_name CartPole-v1 -n 200 -b 4000 -rtg -na --exp_name cartpole
 ```
 python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg --exp_name cartpole_rtg_no_baseline
 python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline --exp_name cartpole_na_rtg_baseline
+python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline -bgs 5 --exp_name cartpole_na_rtg_baseline_bgs5
+python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline -bgs 1 --exp_name cartpole_na_rtg_baseline_bgs1
+python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline -blr 5e-3 --exp_name cartpole_na_rtg_baseline_blr5e-3
+python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline -blr 1e-3 --exp_name cartpole_na_rtg_baseline_blr1e-3
 ```
