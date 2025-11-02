@@ -143,7 +143,7 @@ class PGAgent(nn.Module):
             with torch.no_grad():
                 values_t = self.critic(ptu.from_numpy(obs)).squeeze(-1)
             values = ptu.to_numpy(values_t)
-            advantages = q_values - values      
+            advantages = q_values - values
             ############################
             assert values.shape == q_values.shape
 
@@ -153,6 +153,10 @@ class PGAgent(nn.Module):
             advantages = None
             ############################
             # YOUR IMPLEMENTATION HERE #
+            if self.critic is None:   
+                advantages = q_values.copy()
+            else:
+                advantages = q_values - values
             adv_mean = advantages.mean()
             adv_std = advantages.std()
             advantages = (advantages - adv_mean) / (adv_std + 1e-8)
