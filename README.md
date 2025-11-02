@@ -21,3 +21,19 @@ See the [Assignment PDF](hw3.pdf) for more instructions.
 ## Submission
 
 You should submit your code and the training logs, as well as your report on Canvas.
+
+## Command lines
+```
+python run.py --env_name CartPole-v1 -n 200 -b 1000 --exp_name cartpole
+python run.py --env_name CartPole-v1 -n 200 -b 1000 -rtg --exp_name cartpole_rtg
+python run.py --env_name CartPole-v1 -n 200 -b 1000 -na --exp_name cartpole_na
+python run.py --env_name CartPole-v1 -n 200 -b 1000 -rtg -na --exp_name cartpole_rtg_na
+python run.py --env_name CartPole-v1 -n 200 -b 4000 --exp_name cartpole_lb
+python run.py --env_name CartPole-v1 -n 200 -b 4000 -rtg --exp_name cartpole_lb_rtg
+python run.py --env_name CartPole-v1 -n 200 -b 4000 -na --exp_name cartpole_lb_na
+python run.py --env_name CartPole-v1 -n 200 -b 4000 -rtg -na --exp_name cartpole_lb_rtg_na
+```
+```
+python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg --exp_name cartpole_rtg_no_baseline
+python run.py --env_name CartPole-v1 -n 100 -b 5000 -rtg -na --use_baseline --exp_name cartpole_na_rtg_baseline
+```
